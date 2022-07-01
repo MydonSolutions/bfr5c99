@@ -35,6 +35,9 @@ int main(){
     printf("\nReading Delay Information...\n");
     BFR5read_delay_info(&file);
 
+    printf("\nReading All...\n");
+    BFR5read_all(&file);
+
 
     return 0;
 }
