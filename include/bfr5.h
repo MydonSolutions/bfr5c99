@@ -34,22 +34,22 @@ typedef struct{
 typedef struct{
     hid_t antenna_positions_id;
     hid_t* antenna_positions;
-    uint64_t antenna_positions_elements;
+    uint64_t antenna_position_elements;
 
     hid_t antenna_position_frame_id;
     char* antenna_position_frame;
     
     hid_t antenna_names_id;
     hvl_t* antenna_names; 
-    uint64_t antenna_names_elements; 
+    uint64_t antenna_name_elements; 
     
     uint64_t antenna_numbers_id;
     uint64_t* antenna_numbers;
-    uint64_t antenna_numbers_elements; 
+    uint64_t antenna_number_elements; 
     
     hid_t antenna_diameters_id;
     hid_t* antenna_diameters;
-    uint64_t antenna_diameters_elements;
+    uint64_t antenna_diameter_elements;
     
     hid_t latitude_id;
     hid_t* latitude;
@@ -116,16 +116,16 @@ typedef struct{
 typedef struct{
     hid_t ras_id;
     hid_t* ras;
-    uint64_t ras_elements;
+    uint64_t ra_elements;
 
     hid_t decs_id;
     hid_t* decs;
-    uint64_t decs_elements;
+    uint64_t dec_elements;
 
     hid_t src_names_id;
     hvl_t* src_names;
     hid_t native_type;
-    uint64_t src_names_elements;
+    uint64_t src_name_elements;
 
 } BFR5_beaminfo_t;
 
@@ -133,11 +133,11 @@ typedef struct{
 typedef struct{
     hid_t delays_id;
     hid_t* delays;
-    uint64_t delays_elements;
+    uint64_t delay_elements;
 
     hid_t rates_id;
     hid_t* rates;
-    uint64_t rates_elements;
+    uint64_t rate_elements;
 
     hid_t time_array_id;
     hid_t* time_array;
@@ -145,7 +145,7 @@ typedef struct{
 
     hid_t jds_id;
     hid_t* jds;
-    uint64_t jds_elements;
+    uint64_t jd_elements;
 
     hid_t dut1_id;
     hid_t dut1;
