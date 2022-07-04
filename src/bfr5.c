@@ -231,7 +231,7 @@ herr_t BFR5read_obs_freq_array(BFR5_file_t* bfr5_file){
     dataspace_id = H5Dget_space(bfr5_file->obs_info.freq_array_id);
     elements = H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->obs_info.freq_array_elements = (int) elements;
-    bfr5_file->obs_info.freq_array = malloc((int)elements*sizeof(hid_t));
+    bfr5_file->obs_info.freq_array = malloc((int)elements*sizeof(double));
     status = H5Dread(bfr5_file->obs_info.freq_array_id,H5T_IEEE_F64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, (bfr5_file->obs_info.freq_array));
     status = H5Dclose(bfr5_file->obs_info.freq_array_id);
     return status;
@@ -400,7 +400,7 @@ herr_t BFR5read_delay_delays(BFR5_file_t* bfr5_file){
     dataspace_id = H5Dget_space(bfr5_file->delay_info.delays_id);
     elements = H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->delay_info.delay_elements = (int) elements;
-    bfr5_file->delay_info.delays = malloc((int)elements*sizeof(hid_t));
+    bfr5_file->delay_info.delays = malloc((int)elements*sizeof(double));
     status = H5Dread(bfr5_file->delay_info.delays_id, H5T_IEEE_F64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->delay_info.delays);
     status = H5Dclose(bfr5_file->delay_info.delays_id);
     return status;
@@ -412,7 +412,7 @@ herr_t BFR5read_delay_rates(BFR5_file_t* bfr5_file){
     dataspace_id = H5Dget_space(bfr5_file->delay_info.rates_id);
     elements = H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->delay_info.rate_elements = (int) elements;
-    bfr5_file->delay_info.rates = malloc((int)elements*sizeof(hid_t));
+    bfr5_file->delay_info.rates = malloc((int)elements*sizeof(double));
     status = H5Dread(bfr5_file->delay_info.rates_id, H5T_IEEE_F64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->delay_info.rates);
     status = H5Dclose(bfr5_file->delay_info.rates_id);
     return status;
@@ -424,7 +424,7 @@ herr_t BFR5read_delay_time_array(BFR5_file_t* bfr5_file){
     dataspace_id = H5Dget_space(bfr5_file->delay_info.time_array_id);
     elements = H5Sget_simple_extent_npoints(dataspace_id);    
     bfr5_file->delay_info.time_array_elements = (int) elements;
-    bfr5_file->delay_info.time_array = malloc((int)elements*sizeof(hid_t));
+    bfr5_file->delay_info.time_array = malloc((int)elements*sizeof(double));
     status = H5Dread( bfr5_file->delay_info.time_array_id, H5T_IEEE_F64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT,  bfr5_file->delay_info.time_array);
     status = H5Dclose(bfr5_file->delay_info.time_array_id);
     return status;
@@ -436,7 +436,7 @@ herr_t BFR5read_delay_jds(BFR5_file_t* bfr5_file){
     dataspace_id = H5Dget_space(bfr5_file->delay_info.jds_id);
     elements = H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->delay_info.jd_elements = (int) elements;
-    bfr5_file->delay_info.jds = malloc((int)elements*sizeof(hid_t));
+    bfr5_file->delay_info.jds = malloc((int)elements*sizeof(double));
     status = H5Dread(bfr5_file->delay_info.jds_id, H5T_IEEE_F64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->delay_info.jds);
     status = H5Dclose(bfr5_file->delay_info.jds_id);
     return status;

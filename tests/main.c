@@ -15,10 +15,10 @@ int main(){
 
     printf("Reading Dimensional Information...\n");
     printf("nants: %ld\n",file.dim_info.nants);
-    printf("nants: %ld\n",file.dim_info.npol);
-    printf("nants: %ld\n",file.dim_info.nbeams);
-    printf("nants: %ld\n",file.dim_info.nchan);
-    printf("nants: %ld\n",file.dim_info.ntimes);
+    printf("npol: %ld\n",file.dim_info.npol);
+    printf("nbeams: %ld\n",file.dim_info.nbeams);
+    printf("nchan: %ld\n",file.dim_info.nchan);
+    printf("ntimes: %ld\n",file.dim_info.ntimes);
 
     printf("\nReading Telescope Information...\n");
     BFR5read_tel_info(&file);
@@ -37,7 +37,6 @@ int main(){
 
     printf("\nReading All...\n");
     BFR5read_all(&file);
-
 
     return 0;
 }

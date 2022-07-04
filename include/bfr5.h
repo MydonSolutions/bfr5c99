@@ -33,7 +33,7 @@ typedef struct{
 //Telinfo
 typedef struct{
     hid_t antenna_positions_id;
-    hid_t* antenna_positions;
+    double* antenna_positions;
     uint64_t antenna_position_elements;
 
     hid_t antenna_position_frame_id;
@@ -48,19 +48,19 @@ typedef struct{
     uint64_t antenna_number_elements; 
     
     hid_t antenna_diameters_id;
-    hid_t* antenna_diameters;
+    double* antenna_diameters;
     uint64_t antenna_diameter_elements;
     
     hid_t latitude_id;
-    hid_t* latitude;
+    double* latitude;
     uint64_t latitude_elements;
     
     hid_t longitude_id;
-    hid_t* longitude;
+    double* longitude;
     uint64_t longitude_elements;
     
     hid_t altitude_id;
-    hid_t* altitude;
+    double* altitude;
     uint64_t altitude_elements;
     
     hid_t telescope_name_id;
@@ -76,7 +76,7 @@ typedef struct{
     char* obs_id;
 
     hid_t freq_array_id;
-    hid_t* freq_array;
+    double* freq_array;
     uint64_t freq_array_elements;
     
     uint64_t phase_center_ra_id;
@@ -115,11 +115,11 @@ typedef struct{
 //Beaminfo
 typedef struct{
     hid_t ras_id;
-    hid_t* ras;
+    double* ras;
     uint64_t ra_elements;
 
     hid_t decs_id;
-    hid_t* decs;
+    double* decs;
     uint64_t dec_elements;
 
     hid_t src_names_id;
@@ -132,19 +132,19 @@ typedef struct{
 //Delayinfo
 typedef struct{
     hid_t delays_id;
-    hid_t* delays;
+    double* delays;
     uint64_t delay_elements;
 
     hid_t rates_id;
-    hid_t* rates;
+    double* rates;
     uint64_t rate_elements;
 
     hid_t time_array_id;
-    hid_t* time_array;
+    double* time_array;
     uint64_t time_array_elements;
 
     hid_t jds_id;
-    hid_t* jds;
+    double* jds;
     uint64_t jd_elements;
 
     hid_t dut1_id;
@@ -154,12 +154,9 @@ typedef struct{
 
 
 typedef struct{
-
-    //HDF5 File Info IDs:
     hid_t file_id;
     
     hid_t reim_tid;
-
 
     BFR5_diminfo_t dim_info;
     BFR5_telinfo_t tel_info;
@@ -167,7 +164,6 @@ typedef struct{
     BFR5_calinfo_t cal_info;
     BFR5_beaminfo_t beam_info;
     BFR5_delayinfo_t delay_info;
-    
 } BFR5_file_t;
 
 herr_t status;
