@@ -1,1 +1,1 @@
-install_subdir('bfr5c99', install_dir : get_option('includedir'))
+install_headers('bfr5.h', install_dir : get_option('includedir'))

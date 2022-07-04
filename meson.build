@@ -17,6 +17,7 @@ lib_bfr5c99 = library(
   include_directories: inc_lst,
   dependencies: dep_lst,
   install: true,
+  install_dir: 'lib'
 )
 
 lib_bfr5c99_dep = declare_dependency(
