@@ -52,16 +52,13 @@ typedef struct{
     uint64_t antenna_diameter_elements;
     
     hid_t latitude_id;
-    double* latitude;
-    uint64_t latitude_elements;
+    double latitude;
     
     hid_t longitude_id;
-    double* longitude;
-    uint64_t longitude_elements;
+    double longitude;
     
     hid_t altitude_id;
-    double* altitude;
-    uint64_t altitude_elements;
+    double altitude;
     
     hid_t telescope_name_id;
     char* telescope_name;
@@ -218,7 +215,7 @@ herr_t BFR5read_delay_dut1(BFR5_file_t* bfr5_file);
 
 //Free structs
 void BFR5free_all(BFR5_file_t* bfr5_file);
-void BFR5free_tele_info(BFR5_file_t* bfr5_file);
+void BFR5free_tel_info(BFR5_file_t* bfr5_file);
 void BFR5free_obs_info(BFR5_file_t* bfr5_file);
 void BFR5free_cal_info(BFR5_file_t* bfr5_file);
 void BFR5free_beam_info(BFR5_file_t* bfr5_file);
