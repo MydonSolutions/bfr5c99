@@ -1,6 +1,6 @@
 #include "bfr5.h"
 
-herr_t BFR5open(char* hdf5_filename, BFR5_file_t* bfr5_file){
+herr_t BFR5open(const char* hdf5_filename, BFR5_file_t* bfr5_file){
 
     bfr5_file->reim_tid = H5Tcreate(H5T_COMPOUND, sizeof(complex_float_t));
     H5Tinsert(bfr5_file->reim_tid, "r", HOFFSET(complex_float_t, re), H5T_IEEE_F32LE);

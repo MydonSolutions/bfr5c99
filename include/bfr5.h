@@ -168,7 +168,7 @@ typedef struct{
 
 herr_t status;
 
-herr_t BFR5open(char* hdf5_filename, BFR5_file_t* BFR5file);
+herr_t BFR5open(const char* hdf5_filename, BFR5_file_t* BFR5file);
 
 void BFR5read_all(BFR5_file_t* bfr5_file);
 
