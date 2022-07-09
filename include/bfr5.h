@@ -76,11 +76,11 @@ typedef struct{
     double* freq_array;
     uint64_t freq_array_elements;
     
-    uint64_t phase_center_ra_id;
-    hid_t phase_center_ra;
+    hid_t phase_center_ra_id;
+    double phase_center_ra;
     
-    uint64_t phase_center_dec_id;
-    hid_t phase_center_dec;
+    hid_t phase_center_dec_id;
+    double phase_center_dec;
 
     uint64_t instrument_name_id;
     char* instrument_name;
