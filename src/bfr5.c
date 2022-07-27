@@ -1,5 +1,7 @@
 #include "bfr5.h"
 
+static herr_t status;
+
 herr_t BFR5open(const char* hdf5_filename, BFR5_file_t* bfr5_file){
 
     bfr5_file->reim_tid = H5Tcreate(H5T_COMPOUND, sizeof(complex_float_t));

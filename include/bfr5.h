@@ -163,8 +163,6 @@ typedef struct{
     BFR5_delayinfo_t delay_info;
 } BFR5_file_t;
 
-herr_t status;
-
 herr_t BFR5open(const char* hdf5_filename, BFR5_file_t* BFR5file);
 
 void BFR5read_all(BFR5_file_t* bfr5_file);
