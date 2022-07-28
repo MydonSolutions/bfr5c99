@@ -6,7 +6,7 @@ src_lst = []
 inc_lst = [
 	include_directories('include'),
 ]
-dep_lst = [dependency('hdf5')]
+dep_lst = [dependency('hdf5', language:'c')]
 
 subdir('include')
 subdir('src')
