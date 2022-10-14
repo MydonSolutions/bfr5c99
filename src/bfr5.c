@@ -28,26 +28,46 @@ void BFR5read_dim_info(BFR5_file_t* bfr5_file){
 }
 herr_t BFR5read_dim_nants(BFR5_file_t* bfr5_file){
     bfr5_file->dim_info.nants_id = H5Dopen(bfr5_file->file_id, "/diminfo/nants", H5P_DEFAULT);
+    if (bfr5_file->dim_info.nants_id < 0) {
+        return bfr5_file->dim_info.nants_id;
+    }
+
     H5Dread(bfr5_file->dim_info.nants_id, H5T_STD_I64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->dim_info.nants));
     return H5Dclose(bfr5_file->dim_info.nants_id);
 }
 herr_t BFR5read_dim_npol(BFR5_file_t* bfr5_file){
     bfr5_file->dim_info.npol_id = H5Dopen(bfr5_file->file_id, "/diminfo/npol", H5P_DEFAULT);
+    if (bfr5_file->dim_info.npol_id < 0) {
+        return bfr5_file->dim_info.npol_id;
+    }
+
     H5Dread(bfr5_file->dim_info.npol_id, H5T_STD_I64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->dim_info.npol));
     return H5Dclose(bfr5_file->dim_info.npol_id);
 }
 herr_t BFR5read_dim_nbeams(BFR5_file_t* bfr5_file){
     bfr5_file->dim_info.nbeams_id = H5Dopen(bfr5_file->file_id, "/diminfo/nbeams", H5P_DEFAULT);
+    if (bfr5_file->dim_info.nbeams_id < 0) {
+        return bfr5_file->dim_info.nbeams_id;
+    }
+
     H5Dread(bfr5_file->dim_info.nbeams_id, H5T_STD_I64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->dim_info.nbeams));
     return H5Dclose(bfr5_file->dim_info.nbeams_id);
 }
 herr_t BFR5read_dim_nchan(BFR5_file_t* bfr5_file){
     bfr5_file->dim_info.nchan_id = H5Dopen(bfr5_file->file_id, "/diminfo/nchan", H5P_DEFAULT);
+    if (bfr5_file->dim_info.nchan_id < 0) {
+        return bfr5_file->dim_info.nchan_id;
+    }
+
     H5Dread(bfr5_file->dim_info.nchan_id, H5T_STD_I64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->dim_info.nchan));
     return H5Dclose(bfr5_file->dim_info.nchan_id);
 }
 herr_t BFR5read_dim_ntimes(BFR5_file_t* bfr5_file){
     bfr5_file->dim_info.ntimes_id = H5Dopen(bfr5_file->file_id, "/diminfo/ntimes", H5P_DEFAULT);
+    if (bfr5_file->dim_info.ntimes_id < 0) {
+        return bfr5_file->dim_info.ntimes_id;
+    }
+
     H5Dread(bfr5_file->dim_info.ntimes_id, H5T_STD_I64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->dim_info.ntimes));
     return H5Dclose(bfr5_file->dim_info.ntimes_id);
 }
@@ -68,6 +88,10 @@ void BFR5read_tel_info(BFR5_file_t* bfr5_file){
 herr_t BFR5read_tel_antenna_positions(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->tel_info.antenna_positions_id = H5Dopen(bfr5_file->file_id, "/telinfo/antenna_positions", H5P_DEFAULT);
+    if (bfr5_file->tel_info.antenna_positions_id < 0) {
+        return bfr5_file->tel_info.antenna_positions_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->tel_info.antenna_positions_id);
     bfr5_file->tel_info.antenna_position_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->tel_info.antenna_positions = malloc(bfr5_file->tel_info.antenna_position_elements*sizeof(long double));
@@ -80,6 +104,10 @@ herr_t BFR5read_tel_antenna_position_frame(BFR5_file_t* bfr5_file){
     hid_t native_type;
     uint64_t size;
     bfr5_file->tel_info.antenna_position_frame_id = H5Dopen(bfr5_file->file_id, "/telinfo/antenna_position_frame", H5P_DEFAULT);
+    if (bfr5_file->tel_info.antenna_position_frame_id < 0) {
+        return bfr5_file->tel_info.antenna_position_frame_id;
+    }
+
     type = H5Dget_type(bfr5_file->tel_info.antenna_position_frame_id);
     native_type = H5Tget_native_type(type, H5T_DIR_DEFAULT);
     size = (int)H5Tget_size(native_type);
@@ -96,6 +124,10 @@ herr_t BFR5read_tel_antenna_names(BFR5_file_t* bfr5_file){
     hid_t native_type;
 
     bfr5_file->tel_info.antenna_names_id = H5Dopen(bfr5_file->file_id, "/telinfo/antenna_names", H5P_DEFAULT);
+    if (bfr5_file->tel_info.antenna_names_id < 0) {
+        return bfr5_file->tel_info.antenna_names_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->tel_info.antenna_names_id);
     bfr5_file->tel_info.antenna_name_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     native_type = H5Tvlen_create(H5T_NATIVE_CHAR);
@@ -108,6 +140,10 @@ herr_t BFR5read_tel_antenna_names(BFR5_file_t* bfr5_file){
 herr_t BFR5read_tel_antenna_numbers(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->tel_info.antenna_numbers_id = H5Dopen(bfr5_file->file_id, "/telinfo/antenna_numbers", H5P_DEFAULT);
+    if (bfr5_file->tel_info.antenna_numbers_id < 0) {
+        return bfr5_file->tel_info.antenna_numbers_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->tel_info.antenna_numbers_id);
     bfr5_file->tel_info.antenna_number_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->tel_info.antenna_numbers = malloc(bfr5_file->tel_info.antenna_number_elements*sizeof(int));
@@ -118,6 +154,10 @@ herr_t BFR5read_tel_antenna_numbers(BFR5_file_t* bfr5_file){
 herr_t BFR5read_tel_antenna_diameters(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->tel_info.antenna_diameters_id = H5Dopen(bfr5_file->file_id, "/telinfo/antenna_diameters", H5P_DEFAULT);
+    if (bfr5_file->tel_info.antenna_diameters_id < 0) {
+        return bfr5_file->tel_info.antenna_diameters_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->tel_info.antenna_diameters_id);
     bfr5_file->tel_info.antenna_diameter_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->tel_info.antenna_diameters = malloc(bfr5_file->tel_info.antenna_diameter_elements*sizeof(long double));
@@ -127,18 +167,30 @@ herr_t BFR5read_tel_antenna_diameters(BFR5_file_t* bfr5_file){
 //Float64
 herr_t BFR5read_tel_latitude(BFR5_file_t* bfr5_file){
     bfr5_file->tel_info.latitude_id = H5Dopen(bfr5_file->file_id, "/telinfo/latitude", H5P_DEFAULT);
+    if (bfr5_file->tel_info.latitude_id < 0) {
+        return bfr5_file->tel_info.latitude_id;
+    }
+
     H5Dread(bfr5_file->tel_info.latitude_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->tel_info.latitude));
     return H5Dclose(bfr5_file->tel_info.latitude_id);
 }
 //Float64
 herr_t BFR5read_tel_longitude(BFR5_file_t* bfr5_file){
     bfr5_file->tel_info.longitude_id = H5Dopen(bfr5_file->file_id, "/telinfo/longitude", H5P_DEFAULT);
+    if (bfr5_file->tel_info.longitude_id < 0) {
+        return bfr5_file->tel_info.longitude_id;
+    }
+
     H5Dread(bfr5_file->tel_info.longitude_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->tel_info.longitude));
     return H5Dclose(bfr5_file->tel_info.longitude_id);
 }
 //Float64
 herr_t BFR5read_tel_altitude(BFR5_file_t* bfr5_file){
     bfr5_file->tel_info.altitude_id = H5Dopen(bfr5_file->file_id, "/telinfo/altitude", H5P_DEFAULT);
+    if (bfr5_file->tel_info.altitude_id < 0) {
+        return bfr5_file->tel_info.altitude_id;
+    }
+
     H5Dread(bfr5_file->tel_info.altitude_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->tel_info.altitude));
     return H5Dclose(bfr5_file->tel_info.altitude_id);
 }
@@ -148,6 +200,10 @@ herr_t BFR5read_tel_telescope_name(BFR5_file_t* bfr5_file){
     hid_t native_type;
     uint64_t size;
     bfr5_file->tel_info.telescope_name_id = H5Dopen(bfr5_file->file_id, "/telinfo/telescope_name", H5P_DEFAULT);
+    if (bfr5_file->tel_info.telescope_name_id < 0) {
+        return bfr5_file->tel_info.telescope_name_id;
+    }
+
     type = H5Dget_type(bfr5_file->tel_info.telescope_name_id);
     native_type = H5Tget_native_type(type, H5T_DIR_DEFAULT);
     size = (int)H5Tget_size(native_type);
@@ -171,6 +227,10 @@ herr_t BFR5read_obs_id(BFR5_file_t* bfr5_file){
     hid_t native_type;
     uint64_t size;
     bfr5_file->obs_info.id = H5Dopen(bfr5_file->file_id, "/obsinfo/obsid", H5P_DEFAULT);
+    if (bfr5_file->obs_info.id < 0) {
+        return bfr5_file->obs_info.id;
+    }
+
     type = H5Dget_type(bfr5_file->obs_info.id);
     native_type = H5Tget_native_type(type, H5T_DIR_DEFAULT);
     size = (int)H5Tget_size(native_type);
@@ -183,6 +243,10 @@ herr_t BFR5read_obs_id(BFR5_file_t* bfr5_file){
 herr_t BFR5read_obs_freq_array(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->obs_info.freq_array_id = H5Dopen(bfr5_file->file_id, "/obsinfo/freq_array", H5P_DEFAULT);
+    if (bfr5_file->obs_info.freq_array_id < 0) {
+        return bfr5_file->obs_info.freq_array_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->obs_info.freq_array_id);
     bfr5_file->obs_info.freq_array_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->obs_info.freq_array = malloc(bfr5_file->obs_info.freq_array_elements*sizeof(double));
@@ -192,12 +256,20 @@ herr_t BFR5read_obs_freq_array(BFR5_file_t* bfr5_file){
 //Float64
 herr_t BFR5read_obs_phase_center_ra(BFR5_file_t* bfr5_file){
     bfr5_file->obs_info.phase_center_ra_id = H5Dopen(bfr5_file->file_id, "/obsinfo/phase_center_ra", H5P_DEFAULT);
+    if (bfr5_file->obs_info.phase_center_ra_id < 0) {
+        return bfr5_file->obs_info.phase_center_ra_id;
+    }
+
     H5Dread(bfr5_file->obs_info.phase_center_ra_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->obs_info.phase_center_ra));
     return H5Dclose(bfr5_file->obs_info.phase_center_ra_id);
 }
 //Float64
 herr_t BFR5read_obs_phase_center_dec(BFR5_file_t* bfr5_file){
     bfr5_file->obs_info.phase_center_dec_id = H5Dopen(bfr5_file->file_id, "/obsinfo/phase_center_dec", H5P_DEFAULT);
+    if (bfr5_file->obs_info.phase_center_dec_id < 0) {
+        return bfr5_file->obs_info.phase_center_dec_id;
+    }
+
     H5Dread(bfr5_file->obs_info.phase_center_dec_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->obs_info.phase_center_dec));
     return H5Dclose(bfr5_file->obs_info.phase_center_dec_id);
 }
@@ -207,6 +279,10 @@ herr_t BFR5read_obs_instrument_name(BFR5_file_t* bfr5_file){
     hid_t native_type;
     uint64_t size;
     bfr5_file->obs_info.instrument_name_id = H5Dopen(bfr5_file->file_id, "/obsinfo/instrument_name", H5P_DEFAULT);
+    if (bfr5_file->obs_info.instrument_name_id < 0) {
+        return bfr5_file->obs_info.instrument_name_id;
+    }
+
     type = H5Dget_type(bfr5_file->obs_info.instrument_name_id);
     native_type = H5Tget_native_type(type, H5T_DIR_DEFAULT);
     size = (int)H5Tget_size(native_type);
@@ -229,6 +305,10 @@ herr_t BFR5read_cal_refant(BFR5_file_t* bfr5_file){
     hid_t native_type;
     uint64_t size;
     bfr5_file->cal_info.refant_id = H5Dopen(bfr5_file->file_id, "/calinfo/refant", H5P_DEFAULT);
+    if (bfr5_file->cal_info.refant_id < 0) {
+        return bfr5_file->cal_info.refant_id;
+    }
+
     type = H5Dget_type(bfr5_file->cal_info.refant_id);
     native_type = H5Tget_native_type(type, H5T_DIR_DEFAULT);
     size = (int)H5Tget_size(native_type);
@@ -240,6 +320,10 @@ herr_t BFR5read_cal_refant(BFR5_file_t* bfr5_file){
 herr_t BFR5read_cal_k(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->cal_info.cal_k_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_K", H5P_DEFAULT);
+    if (bfr5_file->cal_info.cal_k_id < 0) {
+        return bfr5_file->cal_info.cal_k_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_k_id);
     H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_k_dims, NULL);
     bfr5_file->cal_info.cal_k_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
@@ -250,6 +334,10 @@ herr_t BFR5read_cal_k(BFR5_file_t* bfr5_file){
 herr_t BFR5read_cal_b(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->cal_info.cal_b_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_B", H5P_DEFAULT);
+    if (bfr5_file->cal_info.cal_b_id < 0) {
+        return bfr5_file->cal_info.cal_b_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_b_id);
     H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_b_dims, NULL);
     bfr5_file->cal_info.cal_b_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
@@ -260,6 +348,10 @@ herr_t BFR5read_cal_b(BFR5_file_t* bfr5_file){
 herr_t BFR5read_cal_g(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->cal_info.cal_g_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_G", H5P_DEFAULT);
+    if (bfr5_file->cal_info.cal_g_id < 0) {
+        return bfr5_file->cal_info.cal_g_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_g_id);
     H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_g_dims, NULL);
     bfr5_file->cal_info.cal_g_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
@@ -270,6 +362,10 @@ herr_t BFR5read_cal_g(BFR5_file_t* bfr5_file){
 herr_t BFR5read_cal_all(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->cal_info.cal_all_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_all", H5P_DEFAULT);
+    if (bfr5_file->cal_info.cal_all_id < 0) {
+        return bfr5_file->cal_info.cal_all_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_all_id);
     H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_all_dims, NULL);
     bfr5_file->cal_info.cal_all_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
@@ -289,6 +385,10 @@ void BFR5read_beam_info(BFR5_file_t* bfr5_file){
 herr_t BFR5read_beam_ras(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->beam_info.ras_id = H5Dopen(bfr5_file->file_id, "/beaminfo/ras", H5P_DEFAULT);
+    if (bfr5_file->beam_info.ras_id < 0) {
+        return bfr5_file->beam_info.ras_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->beam_info.ras_id);
     bfr5_file->beam_info.ra_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->beam_info.ras = malloc(bfr5_file->beam_info.ra_elements*sizeof(double));
@@ -298,6 +398,10 @@ herr_t BFR5read_beam_ras(BFR5_file_t* bfr5_file){
 herr_t BFR5read_beam_decs(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->beam_info.decs_id = H5Dopen(bfr5_file->file_id, "/beaminfo/decs", H5P_DEFAULT);
+    if (bfr5_file->beam_info.decs_id < 0) {
+        return bfr5_file->beam_info.decs_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->beam_info.decs_id);
     bfr5_file->beam_info.dec_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->beam_info.decs = malloc(bfr5_file->beam_info.dec_elements*sizeof(double));
@@ -307,6 +411,10 @@ herr_t BFR5read_beam_decs(BFR5_file_t* bfr5_file){
 herr_t BFR5read_beam_src(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->beam_info.src_names_id = H5Dopen(bfr5_file->file_id, "/beaminfo/src_names", H5P_DEFAULT);
+    if (bfr5_file->beam_info.src_names_id < 0) {
+        return bfr5_file->beam_info.src_names_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->beam_info.src_names_id);
     bfr5_file->beam_info.src_name_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->beam_info.native_type = H5Tvlen_create(H5T_NATIVE_CHAR);
@@ -328,6 +436,10 @@ void BFR5read_delay_info(BFR5_file_t* bfr5_file){
 herr_t BFR5read_delay_delays(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->delay_info.delays_id = H5Dopen(bfr5_file->file_id, "/delayinfo/delays", H5P_DEFAULT);
+    if (bfr5_file->delay_info.delays_id < 0) {
+        return bfr5_file->delay_info.delays_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->delay_info.delays_id);
     H5Sget_simple_extent_dims(dataspace_id, bfr5_file->delay_info.delay_dims, NULL);
     bfr5_file->delay_info.delay_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
@@ -338,6 +450,10 @@ herr_t BFR5read_delay_delays(BFR5_file_t* bfr5_file){
 herr_t BFR5read_delay_rates(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->delay_info.rates_id = H5Dopen(bfr5_file->file_id, "/delayinfo/rates", H5P_DEFAULT);
+    if (bfr5_file->delay_info.rates_id < 0) {
+        return bfr5_file->delay_info.rates_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->delay_info.rates_id);
     H5Sget_simple_extent_dims(dataspace_id, bfr5_file->delay_info.rate_dims, NULL);
     bfr5_file->delay_info.rate_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
@@ -348,6 +464,10 @@ herr_t BFR5read_delay_rates(BFR5_file_t* bfr5_file){
 herr_t BFR5read_delay_time_array(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->delay_info.time_array_id = H5Dopen(bfr5_file->file_id, "/delayinfo/time_array", H5P_DEFAULT);
+    if (bfr5_file->delay_info.time_array_id < 0) {
+        return bfr5_file->delay_info.time_array_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->delay_info.time_array_id);
     bfr5_file->delay_info.time_array_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);   ;
     bfr5_file->delay_info.time_array = malloc(bfr5_file->delay_info.time_array_elements*sizeof(double));
@@ -357,6 +477,10 @@ herr_t BFR5read_delay_time_array(BFR5_file_t* bfr5_file){
 herr_t BFR5read_delay_jds(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
     bfr5_file->delay_info.jds_id = H5Dopen(bfr5_file->file_id, "/delayinfo/jds", H5P_DEFAULT);
+    if (bfr5_file->delay_info.jds_id < 0) {
+        return bfr5_file->delay_info.jds_id;
+    }
+
     dataspace_id = H5Dget_space(bfr5_file->delay_info.jds_id);
     bfr5_file->delay_info.jd_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->delay_info.jds = malloc(bfr5_file->delay_info.jd_elements*sizeof(double));
@@ -365,6 +489,10 @@ herr_t BFR5read_delay_jds(BFR5_file_t* bfr5_file){
 }
 herr_t BFR5read_delay_dut1(BFR5_file_t* bfr5_file){
     bfr5_file->delay_info.dut1_id = H5Dopen(bfr5_file->file_id, "/delayinfo/dut1", H5P_DEFAULT);
+    if (bfr5_file->delay_info.dut1_id < 0) {
+        return bfr5_file->delay_info.dut1_id;
+    }
+
     H5Dread(bfr5_file->delay_info.dut1_id, H5T_STD_I64LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->delay_info.dut1));
     return H5Dclose(bfr5_file->delay_info.dut1_id);
 }
