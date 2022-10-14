@@ -249,46 +249,42 @@ herr_t BFR5read_cal_refant(BFR5_file_t* bfr5_file){
 }
 herr_t BFR5read_cal_k(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
-    herr_t elements;
     bfr5_file->cal_info.cal_k_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_K", H5P_DEFAULT);
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_k_id);
-    elements = H5Sget_simple_extent_npoints(dataspace_id);
-    bfr5_file->cal_info.cal_k_elements = (int) elements;
-    bfr5_file->cal_info.cal_k = malloc((int)elements*sizeof(float));
-    H5Dread(bfr5_file->cal_info.cal_k_id, H5T_IEEE_F32LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, (bfr5_file->cal_info.cal_k));
+    H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_k_dims, NULL);
+    bfr5_file->cal_info.cal_k_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
+    bfr5_file->cal_info.cal_k = malloc(bfr5_file->cal_info.cal_k_elements*sizeof(float));
+    H5Dread(bfr5_file->cal_info.cal_k_id, H5T_IEEE_F32LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->cal_info.cal_k);
     return H5Dclose(bfr5_file->cal_info.cal_k_id);
 }
 herr_t BFR5read_cal_b(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
-    herr_t elements;
     bfr5_file->cal_info.cal_b_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_B", H5P_DEFAULT);
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_b_id);
-    elements = H5Sget_simple_extent_npoints(dataspace_id);
-    bfr5_file->cal_info.cal_b_elements = (int) elements;
-    bfr5_file->cal_info.cal_b = malloc((int)elements*sizeof(complex_float_t));
-    H5Dread(bfr5_file->cal_info.cal_b_id, bfr5_file->reim_tid, H5S_ALL, H5S_ALL, H5P_DEFAULT, (bfr5_file->cal_info.cal_b));
+    H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_b_dims, NULL);
+    bfr5_file->cal_info.cal_b_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
+    bfr5_file->cal_info.cal_b = malloc(bfr5_file->cal_info.cal_b_elements*sizeof(complex_float_t));
+    H5Dread(bfr5_file->cal_info.cal_b_id, bfr5_file->reim_tid, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->cal_info.cal_b);
     return H5Dclose(bfr5_file->cal_info.cal_b_id);
 }
 herr_t BFR5read_cal_g(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
-    herr_t elements;
     bfr5_file->cal_info.cal_g_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_G", H5P_DEFAULT);
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_g_id);
-    elements = H5Sget_simple_extent_npoints(dataspace_id);
-    bfr5_file->cal_info.cal_g_elements = (int) elements;
-    bfr5_file->cal_info.cal_g = malloc((int)elements*sizeof(complex_float_t));
-    H5Dread(bfr5_file->cal_info.cal_g_id, bfr5_file->reim_tid, H5S_ALL, H5S_ALL, H5P_DEFAULT, (bfr5_file->cal_info.cal_g));
+    H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_g_dims, NULL);
+    bfr5_file->cal_info.cal_g_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
+    bfr5_file->cal_info.cal_g = malloc(bfr5_file->cal_info.cal_g_elements*sizeof(complex_float_t));
+    H5Dread(bfr5_file->cal_info.cal_g_id, bfr5_file->reim_tid, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->cal_info.cal_g);
     return H5Dclose(bfr5_file->cal_info.cal_g_id);
 }
 herr_t BFR5read_cal_all(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
-    herr_t elements;
     bfr5_file->cal_info.cal_all_id = H5Dopen(bfr5_file->file_id, "/calinfo/cal_all", H5P_DEFAULT);
     dataspace_id = H5Dget_space(bfr5_file->cal_info.cal_all_id);
-    elements = H5Sget_simple_extent_npoints(dataspace_id);
-    bfr5_file->cal_info.cal_all_elements = (int) elements;
-    bfr5_file->cal_info.cal_all = malloc((int)elements*sizeof(complex_float_t));
-    H5Dread(bfr5_file->cal_info.cal_all_id, bfr5_file->reim_tid, H5S_ALL, H5S_ALL, H5P_DEFAULT, (bfr5_file->cal_info.cal_all));
+    H5Sget_simple_extent_dims(dataspace_id, bfr5_file->cal_info.cal_all_dims, NULL);
+    bfr5_file->cal_info.cal_all_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
+    bfr5_file->cal_info.cal_all = malloc(bfr5_file->cal_info.cal_all_elements*sizeof(complex_float_t));
+    H5Dread(bfr5_file->cal_info.cal_all_id, bfr5_file->reim_tid, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->cal_info.cal_all);
     return H5Dclose(bfr5_file->cal_info.cal_all_id);
 }
 
@@ -347,23 +343,21 @@ void BFR5read_delay_info(BFR5_file_t* bfr5_file){
 
 herr_t BFR5read_delay_delays(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
-    herr_t elements;
     bfr5_file->delay_info.delays_id = H5Dopen(bfr5_file->file_id, "/delayinfo/delays", H5P_DEFAULT);
     dataspace_id = H5Dget_space(bfr5_file->delay_info.delays_id);
-    elements = H5Sget_simple_extent_npoints(dataspace_id);
-    bfr5_file->delay_info.delay_elements = (int) elements;
-    bfr5_file->delay_info.delays = malloc((int)elements*sizeof(double));
+    H5Sget_simple_extent_dims(dataspace_id, bfr5_file->delay_info.delay_dims, NULL);
+    bfr5_file->delay_info.delay_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
+    bfr5_file->delay_info.delays = malloc(bfr5_file->delay_info.delay_elements*sizeof(double));
     H5Dread(bfr5_file->delay_info.delays_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->delay_info.delays);
     return H5Dclose(bfr5_file->delay_info.delays_id);
 }
 herr_t BFR5read_delay_rates(BFR5_file_t* bfr5_file){
     hid_t dataspace_id;
-    herr_t elements;
     bfr5_file->delay_info.rates_id = H5Dopen(bfr5_file->file_id, "/delayinfo/rates", H5P_DEFAULT);
     dataspace_id = H5Dget_space(bfr5_file->delay_info.rates_id);
-    elements = H5Sget_simple_extent_npoints(dataspace_id);
-    bfr5_file->delay_info.rate_elements = (int) elements;
-    bfr5_file->delay_info.rates = malloc((int)elements*sizeof(double));
+    H5Sget_simple_extent_dims(dataspace_id, bfr5_file->delay_info.rate_dims, NULL);
+    bfr5_file->delay_info.rate_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
+    bfr5_file->delay_info.rates = malloc(bfr5_file->delay_info.rate_elements*sizeof(double));
     H5Dread(bfr5_file->delay_info.rates_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->delay_info.rates);
     return H5Dclose(bfr5_file->delay_info.rates_id);
 }

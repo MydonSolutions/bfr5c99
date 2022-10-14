@@ -20,23 +20,16 @@ int main(){
     printf("nchan: %ld\n",file.dim_info.nchan);
     printf("ntimes: %ld\n",file.dim_info.ntimes);
 
-    printf("\nReading Telescope Information...\n");
-    BFR5read_tel_info(&file);
-
-    printf("\nReading Obsecrvation Information...\n");
-    BFR5read_obs_info(&file);
-
-    printf("\nReading Calibration Information...\n");
-    BFR5read_cal_info(&file);
-
-    printf("\nReading Beam Information...\n");
-    BFR5read_beam_info(&file);
-
-    printf("\nReading Delay Information...\n");
-    BFR5read_delay_info(&file);
-
     printf("\nReading All...\n");
     BFR5read_all(&file);
+
+    printf("cal_k_dims    : [%lld, %lld]\n", file.cal_info.cal_k_dims[0], file.cal_info.cal_k_dims[1]);
+    printf("cal_b_dims    : [%lld, %lld, %lld]\n", file.cal_info.cal_b_dims[0], file.cal_info.cal_b_dims[1], file.cal_info.cal_b_dims[2]);
+    printf("cal_g_dims    : [%lld, %lld]\n", file.cal_info.cal_g_dims[0], file.cal_info.cal_g_dims[1]);
+    printf("cal_all_dims  : [%lld, %lld, %lld]\n", file.cal_info.cal_all_dims[0], file.cal_info.cal_all_dims[1], file.cal_info.cal_all_dims[2]);
+    printf("delay_dims    : [%lld, %lld, %lld]\n", file.delay_info.delay_dims[0], file.delay_info.delay_dims[1], file.delay_info.delay_dims[2]);
+    printf("rate_dims     : [%lld, %lld, %lld]\n", file.delay_info.rate_dims[0], file.delay_info.rate_dims[1], file.delay_info.rate_dims[2]);
+
 
     return 0;
 }

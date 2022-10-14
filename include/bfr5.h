@@ -94,18 +94,22 @@ typedef struct{
     hid_t cal_k_id;
     float* cal_k;
     uint64_t cal_k_elements;
+    hsize_t cal_k_dims[2];
 
     hid_t cal_b_id;
     complex_float_t* cal_b;
     uint64_t cal_b_elements;
+    hsize_t cal_b_dims[3];
 
     hid_t cal_g_id;
     complex_float_t* cal_g;
     uint64_t cal_g_elements;
+    hsize_t cal_g_dims[2];
 
     hid_t cal_all_id;
     complex_float_t* cal_all;
     uint64_t cal_all_elements;
+    hsize_t cal_all_dims[3];
 
 } BFR5_calinfo_t;
 
@@ -131,10 +135,12 @@ typedef struct{
     hid_t delays_id;
     double* delays;
     uint64_t delay_elements;
+    hsize_t delay_dims[3];
 
     hid_t rates_id;
     double* rates;
     uint64_t rate_elements;
+    hsize_t rate_dims[3];
 
     hid_t time_array_id;
     double* time_array;
