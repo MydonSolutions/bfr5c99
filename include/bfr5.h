@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include "hdf5.h"
 
 //Complex
@@ -40,7 +41,7 @@ typedef struct{
     char* antenna_position_frame;
     
     hid_t antenna_names_id;
-    hvl_t* antenna_names; 
+    char** antenna_names; 
     uint64_t antenna_name_elements; 
     
     uint64_t antenna_numbers_id;
@@ -67,9 +68,6 @@ typedef struct{
 //Obsinfo
 typedef struct{
     hid_t id;
-    // hid_t obs_type;
-    // hid_t native_type;
-    // uint64_t obs_size;
     char* obs_id;
 
     hid_t freq_array_id;
@@ -124,8 +122,7 @@ typedef struct{
     uint64_t dec_elements;
 
     hid_t src_names_id;
-    hvl_t* src_names;
-    hid_t native_type;
+    char** src_names;
     uint64_t src_name_elements;
 
 } BFR5_beaminfo_t;

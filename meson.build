@@ -1,5 +1,5 @@
 project('bfr5c99', 'c',
-  version: '0.1.2',
+  version: '0.2.0',
 )
 
 src_lst = []
