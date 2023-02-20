@@ -2,15 +2,12 @@
 #include <stdio.h>
 #include "bfr5.h"
 
-int main(){
+int main(int argc, char const *argv[]){
     printf("Testing HDF5 Library...\n");
-
-    // char* hdf5_filename="../tests/golden_synthesized_input.bfr5";
-    char* hdf5_filename="/mnt/buf0/delay_modeling_comm/GUPPI/guppi_59919_85301_48332468200_3C345_0001.0000.bfr5";
 
     BFR5_file_t file;
 
-    BFR5open(hdf5_filename,&file);
+    BFR5open(argv[1],&file);
     
     BFR5read_dim_info(&file);
 

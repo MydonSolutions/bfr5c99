@@ -105,15 +105,16 @@ herr_t BFR5read_tel_antenna_position_frame(BFR5_file_t* bfr5_file){
         return bfr5_file->tel_info.antenna_position_frame_id;
     }
     herr_t status;
-    hid_t type = H5Tcopy(H5T_C_S1);
     hid_t data_type = H5Dget_type(bfr5_file->tel_info.antenna_position_frame_id);
     if (H5Tis_variable_str(data_type)) {
-        status = H5Tset_size(type, H5T_VARIABLE);
+        status = H5Dread(bfr5_file->tel_info.antenna_position_frame_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->tel_info.antenna_position_frame));
     }
     else {
-        bfr5_file->tel_info.antenna_position_frame = malloc(H5Tget_size(data_type) + 1);
+        size_t data_size = H5Tget_size(data_type) + 1;
+        bfr5_file->tel_info.antenna_position_frame = malloc(data_size);
+        memset(bfr5_file->tel_info.antenna_position_frame, '\0', data_size);
+        status = H5Dread(bfr5_file->tel_info.antenna_position_frame_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->tel_info.antenna_position_frame);
     }
-    status = H5Dread(bfr5_file->tel_info.antenna_position_frame_id, type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->tel_info.antenna_position_frame));
     
     H5Dclose(bfr5_file->tel_info.antenna_position_frame_id);
     return status;
@@ -130,12 +131,12 @@ herr_t BFR5read_tel_antenna_names(BFR5_file_t* bfr5_file){
     bfr5_file->tel_info.antenna_name_elements = (int) H5Sget_simple_extent_npoints(dataspace_id);
     bfr5_file->tel_info.antenna_names = (char **) malloc(bfr5_file->tel_info.antenna_name_elements * sizeof(char*));
     memset(bfr5_file->tel_info.antenna_names, 0, bfr5_file->tel_info.antenna_name_elements);
-    
-    hid_t type = H5Tcopy(H5T_C_S1);
-    herr_t status = H5Tset_size(type, H5T_VARIABLE);
 
-    status = H5Dread(bfr5_file->tel_info.antenna_names_id, type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->tel_info.antenna_names);
+    hid_t data_type = H5Dget_type(bfr5_file->tel_info.antenna_names_id);
+
+    herr_t status = H5Dread(bfr5_file->tel_info.antenna_names_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->tel_info.antenna_names);
     H5Dclose(bfr5_file->tel_info.antenna_names_id);
+    H5Tclose(data_type);
     return status;
 }
 
@@ -205,16 +206,18 @@ herr_t BFR5read_tel_telescope_name(BFR5_file_t* bfr5_file){
     }
     
     herr_t status;
-    hid_t type = H5Tcopy(H5T_C_S1);
     hid_t data_type = H5Dget_type(bfr5_file->tel_info.telescope_name_id);
     if (H5Tis_variable_str(data_type)) {
-        status = H5Tset_size(type, H5T_VARIABLE);
+        status = H5Dread(bfr5_file->tel_info.telescope_name_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->tel_info.telescope_name));
     }
     else {
-        bfr5_file->tel_info.telescope_name = malloc(H5Tget_size(data_type) + 1);
+        size_t data_size = H5Tget_size(data_type) + 1;
+        bfr5_file->tel_info.telescope_name = malloc(data_size);
+        memset(bfr5_file->tel_info.telescope_name, '\0', data_size);
+        status = H5Dread(bfr5_file->tel_info.telescope_name_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->tel_info.telescope_name);
     }
 
-    status = H5Dread(bfr5_file->tel_info.telescope_name_id, type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->tel_info.telescope_name));
+    H5Tclose(data_type);
     H5Dclose(bfr5_file->tel_info.telescope_name_id);
     return status;
 }
@@ -235,16 +238,18 @@ herr_t BFR5read_obs_id(BFR5_file_t* bfr5_file){
     }
 
     herr_t status;
-    hid_t type = H5Tcopy(H5T_C_S1);
     hid_t data_type = H5Dget_type(bfr5_file->obs_info.id);
     if (H5Tis_variable_str(data_type)) {
-        status = H5Tset_size(type, H5T_VARIABLE);
+        status = H5Dread(bfr5_file->obs_info.id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->obs_info.obs_id));
     }
     else {
-        bfr5_file->obs_info.obs_id = malloc(H5Tget_size(data_type) + 1);
+        size_t data_size = H5Tget_size(data_type) + 1;
+        bfr5_file->obs_info.obs_id = malloc(data_size);
+        memset(bfr5_file->obs_info.obs_id, '\0', data_size);
+        status = H5Dread(bfr5_file->obs_info.id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->obs_info.obs_id);
     }
 
-    status = H5Dread(bfr5_file->obs_info.id, type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->obs_info.obs_id));
+    H5Tclose(data_type);
     H5Dclose(bfr5_file->obs_info.id);
     return status;
 }
@@ -290,16 +295,18 @@ herr_t BFR5read_obs_instrument_name(BFR5_file_t* bfr5_file){
     }
 
     herr_t status;
-    hid_t type = H5Tcopy(H5T_C_S1);
     hid_t data_type = H5Dget_type(bfr5_file->obs_info.instrument_name_id);
     if (H5Tis_variable_str(data_type)) {
-        status = H5Tset_size(type, H5T_VARIABLE);
+        status = H5Dread(bfr5_file->obs_info.instrument_name_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->obs_info.instrument_name));
     }
     else {
-        bfr5_file->obs_info.instrument_name = malloc(H5Tget_size(data_type) + 1);
+        size_t data_size = H5Tget_size(data_type) + 1;
+        bfr5_file->obs_info.instrument_name = malloc(data_size);
+        memset(bfr5_file->obs_info.instrument_name, '\0', data_size);
+        status = H5Dread(bfr5_file->obs_info.instrument_name_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->obs_info.instrument_name);
     }
 
-    status = H5Dread(bfr5_file->obs_info.instrument_name_id, type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->obs_info.instrument_name));
+    H5Tclose(data_type);
     H5Dclose(bfr5_file->obs_info.instrument_name_id);
     return status;
 }
@@ -319,16 +326,18 @@ herr_t BFR5read_cal_refant(BFR5_file_t* bfr5_file){
     }
 
     herr_t status;
-    hid_t type = H5Tcopy(H5T_C_S1);
     hid_t data_type = H5Dget_type(bfr5_file->cal_info.refant_id);
     if (H5Tis_variable_str(data_type)) {
-        status = H5Tset_size(type, H5T_VARIABLE);
+        status = H5Dread(bfr5_file->cal_info.refant_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->cal_info.refant));
     }
     else {
-        bfr5_file->cal_info.refant = malloc(H5Tget_size(data_type) + 1);
+        size_t data_size = H5Tget_size(data_type) + 1;
+        bfr5_file->cal_info.refant = malloc(data_size);
+        memset(bfr5_file->cal_info.refant, '\0', data_size);
+        status = H5Dread(bfr5_file->cal_info.refant_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->cal_info.refant);
     }
 
-    status = H5Dread(bfr5_file->cal_info.refant_id, type, H5S_ALL, H5S_ALL, H5P_DEFAULT, &(bfr5_file->cal_info.refant));
+    H5Tclose(data_type);
     H5Dclose(bfr5_file->cal_info.refant_id);
     return status;
 }
@@ -434,11 +443,11 @@ herr_t BFR5read_beam_src(BFR5_file_t* bfr5_file){
     bfr5_file->beam_info.src_names = (char **) malloc(bfr5_file->beam_info.src_name_elements * sizeof(char*));
     memset(bfr5_file->beam_info.src_names, 0, bfr5_file->beam_info.src_name_elements);
     
-    hid_t type = H5Tcopy(H5T_C_S1);
-    herr_t status = H5Tset_size(type, H5T_VARIABLE);
+    hid_t data_type = H5Dget_type(bfr5_file->beam_info.src_names_id);
 
-    status = H5Dread(bfr5_file->beam_info.src_names_id, type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->beam_info.src_names);
+    herr_t status = H5Dread(bfr5_file->beam_info.src_names_id, data_type, H5S_ALL, H5S_ALL, H5P_DEFAULT, bfr5_file->beam_info.src_names);
     H5Dclose(bfr5_file->beam_info.src_names_id);
+    H5Tclose(data_type);
     return status;
 }
 
